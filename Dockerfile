@@ -37,7 +37,7 @@ ARG DEPLOYER=node-red-contrib-agile-deployer
 COPY $TESSERACT $TESSERACT
 COPY $DEPLOYER $DEPLOYER
 
-WORKDIR /root/.node-red/node_modules
+WORKDIR /usr/local/lib/node_modules/node-red/node_modules
 
 RUN npm install /opt/lib/$TESSERACT
 RUN npm install /opt/lib/$DEPLOYER

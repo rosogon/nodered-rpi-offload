@@ -14,10 +14,13 @@ version: '2'
 
 services:
   nodered:
+    hostname: nodered
     image: rosogon/nodered-offload-armv7l
     volumes:
       #- $DATA/nodered:/opt/secure-nodered/.nodered/
       - /opt/vc:/opt/vc:ro
+      - /tmp/offload:/tmp
+      - /home/pi/.offload/nodered:/root/.node-red
     ports:
       - 1880:1880/tcp
     devices:

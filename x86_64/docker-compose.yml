@@ -14,7 +14,11 @@ version: '2'
 
 services:
   nodered:
+    hostname: nodered
     image: rosogon/nodered-offload-x86_64
+    volumes:
+      - /tmp/offload:/tmp
+      - $HOME/.offload/nodered:/root/.node-red
     ports:
       - 1880:1880/tcp
     environment:
