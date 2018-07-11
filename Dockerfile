@@ -41,6 +41,7 @@ WORKDIR /usr/local/lib/node_modules/node-red/node_modules
 
 RUN npm install /opt/lib/$TESSERACT
 RUN npm install /opt/lib/$DEPLOYER
+RUN npm install node-red-contrib-cpu
 
 
 #FROM $BASEIMAGE_DEPLOY
