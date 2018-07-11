@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 if [ $# -eq 0 ]; then
-  echo "Usage: $0 <paralleljobs> [ <nodered_addr> ]"
-  echo "  nodered_addr default = resin.local:1880"
+  echo "Usage: $0 <paralleljobs> <totaljobs>"
+  echo "  nodered_addr default = resin.local:1880 (use ADDR env to override)"
   exit 1
 fi
 
 PARALLEL=$1
-TOTAL=20
+TOTAL=$2
 
-BATCH_ID="$PARALLEL-in-parallel"
-ADDR=http://resin.local:1880
+BATCH_ID="$PARALLEL-parallel-$TOTAL-total"
+ADDR=${ADDR:-http://resin.local:1880}
 IMG_URL=https://github.com/desmondmorris/node-tesseract/raw/master/test/test.png
 THRESHOLDS='{"mem":100,"cpu":100,"temp":100}'
 
@@ -28,6 +28,10 @@ for (( i = 1; i <= $TOTAL ; i++ )); do
        $ADDR/newjob
     set +x
     while [ $(get_count) -ge $PARALLEL ]; do
-        sleep 2
+        sleep 0.1
     done
+done
+
+while [ $(get_count) -gt 0 ]; do
+    sleep 1
 done
