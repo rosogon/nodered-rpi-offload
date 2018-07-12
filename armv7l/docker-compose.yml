@@ -27,3 +27,4 @@ services:
       - /dev/vchiq:/dev/vchiq
     environment:
       - LD_LIBRARY_PATH=/opt/vc/lib
+    network_mode: "host"
