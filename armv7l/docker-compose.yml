@@ -19,8 +19,8 @@ services:
     volumes:
       #- $DATA/nodered:/opt/secure-nodered/.nodered/
       - /opt/vc:/opt/vc:ro
-      - /tmp/offload:/tmp
-      - /home/pi/.offload/nodered:/root/.node-red
+      - ./results/:/tmp
+      - ./.node-red/:/root/.node-red
     ports:
       - 1880:1880/tcp
     devices:
