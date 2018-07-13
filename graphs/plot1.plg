@@ -12,5 +12,5 @@ set yrange[0:100]
 set xrange[0:]
 plot csv using (($8 - start) / 1000):2 with lines title "cpu" axis x1y1, \
      csv using (($8 - start) / 1000):7 with lines title "temp" axis x1y1, \
-     csv using (($8 - start) / 1000):3 with lines axis x1y2
+     csv using (($8 - start) / 1000):3 with points axis x1y2
 
