@@ -23,7 +23,7 @@ END=$(jq -r '.[-1].times.batchend' < $2) # Doing nothing with it yet
 #
 # Start plotting
 #
-gnuplot -e "title='$TITLE'" -e "csv='$CSV'" -e "start=$START" plot1.plg > graph1.png
+gnuplot -e "title='$TITLE'" -e "csv='$CSV'" -e "start=$START" $DIR/plot1.plg > graph1.png
 
 # ... gnuplot -e "title='$TITLE'" -e "csv='$CSV'" -e "start='$START'" plot2.plg > graph2.png
 
