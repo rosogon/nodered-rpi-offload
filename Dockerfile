@@ -27,6 +27,8 @@ RUN apt-get update
 #
 RUN apt-get install -y libraspberrypi-bin || echo "libraspberrypi-bin not available"
 
+RUN apt-get install -y lm-sensors || echo "lm-sensors not available"
+
 RUN npm install -g node-red
 
 WORKDIR /opt/lib
