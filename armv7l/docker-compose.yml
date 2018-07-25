@@ -15,6 +15,7 @@ version: '2'
 services:
   nodered:
     hostname: nodered
+    container_name: nodered
     image: rosogon/nodered-offload-armv7l
     volumes:
       #- $DATA/nodered:/opt/secure-nodered/.nodered/
