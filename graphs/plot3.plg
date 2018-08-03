@@ -1,0 +1,10 @@
+print "title:", title
+print "njobs:", njobs
+set title title
+set xlabel 't'
+set grid
+set key autotitle columnhead
+set term png
+set datafile separator ","
+set yrange[0:njobs]
+plot csv using (($9 - $3) / 1000):4 with points axis x1y1

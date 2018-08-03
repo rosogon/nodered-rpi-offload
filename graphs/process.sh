@@ -9,20 +9,29 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-MONITOR=$1
-CSV=monitor.csv
+MON=$1
+MON_CSV=monitor.csv
 JOBS=$2
+JOBS_CSV=jobs.csv
 TITLE=$(basename $2 .json)
 
-jq -r '(map(keys) | add | unique) as  $cols | map(. as $row | $cols | map($row[.])) as $rows | $cols, $rows[] | @csv ' < $1 > $CSV
+jq -r '(map(keys) | add | unique) as  $cols | map(. as $row | $cols | map($row[.])) as $rows | $cols, $rows[] | @csv ' < $MON > $MON_CSV
+jq -r '[.[].times] | to_entries | map({index:(.key+1)} + .value) | (map(keys)|add|unique) as $cols | map(. as $row | $cols | map($row[.])) as $rows | $cols, $rows[] | @csv' < $JOBS > $JOBS_CSV
 
 START=$(jq -r '.[-1].times.batchstart' < $2)
 END=$(jq -r '.[-1].times.batchend' < $2) # Doing nothing with it yet
 
+NJOBS=$(echo $JOBS | sed -e 's/.*parallel-\(.*\)-total.*/\1/' )
 
 #
 # Start plotting
 #
-gnuplot -e "title='$TITLE'" -e "csv='$CSV'" -e "start=$START" $DIR/plot1.plg > graph1.png
+gnuplot -e "title='$TITLE'" -e "csv='$MON_CSV'" -e "start=$START.0" $DIR/plot1.plg > graph1.png
 
-# ... gnuplot -e "title='$TITLE'" -e "csv='$CSV'" -e "start='$START'" plot2.plg > graph2.png
+gnuplot -e "title='$TITLE'" -e "csv='$MON_CSV'" -e "start=$START.0" $DIR/plot2.plg > graph2.png
+
+gnuplot -e "title='Job completion'" -e "csv='$JOBS_CSV'" -e "njobs=$NJOBS" $DIR/plot3.plg > graph3.png
+
+gnuplot -e "title='Job duration'" -e "csv='$JOBS_CSV'" -e "njobs=$NJOBS" $DIR/plot4.plg > graph4.png
+
+montage graph*.png -tile 2x2 -geometry +0+0 total.png

@@ -1,0 +1,12 @@
+print "title:", title
+print "start: ", start
+
+set title title
+set xlabel 't'
+set grid
+set key autotitle columnhead
+set term png
+set datafile separator ","
+set yrange[0:100]
+plot csv using (($8 - start) / 1000):6 with lines title "mem" axis x1y1, \
+     csv using (($8 - start) / 1000):7 with lines title "temp" axis x1y1
