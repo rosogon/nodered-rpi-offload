@@ -13,5 +13,5 @@
 DATA_ROOT_DIR=/tmp/data
 PERF_DIR=$HOME/git/agile/performance-monitor
 ARCH=x86_64
-ADDR=http://localhost:1880
-PI_HOST=localhost
+export AADDR=http://localhost:1880
+export API_HOST=localhost
