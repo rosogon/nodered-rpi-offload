@@ -20,15 +20,26 @@ source conf.sh
 
 if [ $# -lt 2 ]; then
   echo "Usage: $0 <paralleljobs> <totaljobs> [<suffix>]"
+  echo "Usage: $0 <period> <totaljobs> <threshold-key> <threshold-value> [<suffix>]"
   echo "  suffix defaults to 1"
   exit 1
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PARALLEL=$1
 TOTAL=$2
-SUFFIX=${3:-1}
-DATA_DIR="$DATA_ROOT_DIR"/$PARALLEL-$TOTAL-$SUFFIX
+if [ $# -le 3 ]; then
+    MODE="jobsn"
+    PARALLEL=$1
+    SUFFIX=${3:-1}
+    DATA_DIR="$DATA_ROOT_DIR"/$PARALLEL-$TOTAL-$SUFFIX
+else
+    MODE="jobst"
+    PERIOD=$1
+    KEY=$3
+    VALUE=$4
+    SUFFIX=${5:-1}
+    DATA_DIR="$DATA_ROOT_DIR"/$PERIOD-$TOTAL-$KEY-$VALUE-$SUFFIX
+fi
 
 set -x
 
@@ -47,7 +58,11 @@ sleep 5
 
 cd $DIR
 
-./submit_jobsn.sh $PARALLEL $TOTAL
+if [ "$MODE" == "jobsn" ]; then
+    ./submit_jobsn.sh $PARALLEL $TOTAL
+else
+    ./submit_jobst.sh $PERIOD $TOTAL $KEY $VALUE
+fi
 
 sleep 5
 
@@ -70,6 +85,6 @@ mv $PERF_DIR/img/* "$DATA_DIR"
 
 cd "$DATA_DIR"
 
-"$DIR"/graphs/process.sh monitor.json *parallel*.json
+"$DIR"/graphs/process.sh monitor.json *total*.json
 
 set +x

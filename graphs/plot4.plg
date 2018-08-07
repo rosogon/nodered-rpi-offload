@@ -1,10 +1,19 @@
 print "plot4 - ", "title:", title, " njobs:", njobs
-set title title
-set xlabel 'Job number'
-set ylabel 's'
-set grid
-set key autotitle columnhead
+
+
 set term png
 set datafile separator ","
-set yrange[0:]
-plot csv using 4:8 with points
+set title title
+set key autotitle columnhead
+
+set grid
+
+set xlabel 'job number'
+set ylabel 's'
+set xrange[1:njobs]
+#set yrange[0:]
+
+set style line 1 \
+    pointtype 3 pointsize 1
+
+plot csv using 4:8 with points linestyle 1 notitle
