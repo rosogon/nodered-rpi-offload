@@ -4,7 +4,7 @@ print "start: ", start
 set term png
 set datafile separator ","
 set title title
-set key autotitle columnhead
+set key bottom right
 
 set grid
 
