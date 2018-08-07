@@ -10,7 +10,7 @@ set grid
 
 set xlabel 't'
 set yrange[0:100]
-set y2range[0: 1200000000]
+set y2range[0:1200000000]
 
-plot csv using (($8 - start) / 1000):3 with lines title "cpu freq(%)" axis x1y2, \
-     csv using (($8 - start) / 1000):7 with lines title "temp(°C)" axis x1y1
+plot csv using (($9 - start) / 1000):3 with lines title "cpu freq(%)" axis x1y2, \
+     csv using (($9 - start) / 1000):8 with lines title "temp(°C)" axis x1y1

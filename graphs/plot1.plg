@@ -12,5 +12,5 @@ set xlabel 't'
 set ylabel ''
 set yrange[0:100]
 
-plot csv using (($8 - start) / 1000):2 with lines title "cpu (%)" axis x1y1, \
-     csv using (($8 - start) / 1000):7 with lines title "temp(°C)" axis x1y1
+plot csv using (($9 - start) / 1000):2 with lines title "cpu (%)" axis x1y1, \
+     csv using (($9 - start) / 1000):8 with lines title "temp(°C)" axis x1y1
