@@ -6,7 +6,7 @@
 # https://www.eclipse.org/legal/epl-2.0/
 #
 # SPDX-License-Identifier: EPL-2.0
-# 
+#
 # Contributors:
 #     Atos - initial API and implementation
 #-------------------------------------------------------------------------------
@@ -29,6 +29,8 @@ RUN apt-get install -y libraspberrypi-bin || echo "libraspberrypi-bin not availa
 
 RUN apt-get install -y lm-sensors || echo "lm-sensors not available"
 
+RUN apt-get install sysstat
+
 RUN npm install -g node-red
 
 WORKDIR /opt/lib
@@ -50,6 +52,9 @@ RUN npm install node-red-contrib-cpu
 #COPY --from=0 /opt/secure-nodered /opt/secure-nodered
 #WORKDIR /opt/secure-nodered
 
+WORKDIR /opt/offload
+COPY docker/start.sh start.sh
+
 EXPOSE 1880
 
-CMD DEBUG=cloud-link node-red
+CMD /opt/offload/start.sh
