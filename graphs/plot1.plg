@@ -1,6 +1,10 @@
 print "title:", title
 print "start: ", start
 
+timestamp = 9
+cpu = 2
+temp = 8
+
 set term png
 set datafile separator ","
 set title title
@@ -12,5 +16,5 @@ set xlabel 't'
 set ylabel ''
 set yrange[0:100]
 
-plot csv using (($9 - start) / 1000):2 with lines title "cpu (%)" axis x1y1, \
-     csv using (($9 - start) / 1000):8 with lines title "temp(°C)" axis x1y1
+plot csv using ((column(timestamp) - start) / 1000):cpu with lines title "cpu (%)" axis x1y1, \
+     csv using ((column(timestamp) - start) / 1000):temp with lines title "temp(°C)" axis x1y1

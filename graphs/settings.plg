@@ -1,0 +1,12 @@
+
+arm_freq_capped = 1
+cpu = 2
+cpu_freq = 3
+load = 4
+localjobs = 5
+low_voltage = 6
+mem = 7
+temp = 8
+timestamp = 9
+totaljobs = 10
+turbo_disabled = 11

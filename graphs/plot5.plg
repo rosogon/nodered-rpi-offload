@@ -1,0 +1,21 @@
+print "plot5 - ", "title:", title, " start:", start
+
+load sprintf("%s/%s", dir, '/settings.plg')
+
+set term png
+set datafile separator ","
+set title title
+
+set grid
+
+set xlabel 't'
+set ylabel ''
+set yrange[0:10]
+set y2range[0:100]
+set y2tics
+
+plot \
+     csv using ((column(timestamp) - start) / 1000):localjobs with lines title "Local" axis x1y1, \
+     csv using ((column(timestamp) - start) / 1000):totaljobs with lines title "Total" axis x1y1, \
+     csv using ((column(timestamp) - start) / 1000):temp with lines title "temp(°C)" axis x1y2#, \
+     #csv using ((column(timestamp) - start) / 1000):cpu with lines title "cpu" axis x1y2, \

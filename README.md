@@ -106,3 +106,30 @@ Each job execution outputs an object with the times taken to execute the batch (
 ```
 
 The GET /count endpoint returns the number of jobs running at the moment, useful to know when the batch has finished.
+
+The GET /monitor endpoint returns the last monitored values from the gateway.
+
+### Running an experiment
+
+The script `suite_submit_jobs.sh` runs a full experiment from scratch. You just
+need to make sure the local workflow connects to the remote workflow and that
+the remote nodered is running.
+
+It does:
+
+* docker-compose up nodered on the gateway
+* run performance-monitor
+* submit the jobs (see below)
+* docker-compose down
+* collect the results from the gateway
+* generate graphs
+
+There are two modes of submitting modes:
+
+* no-offloading: to check gateway behavior. It sends a total number 'n' of jobs
+  to process, but only a number 'p' can be processed in parallel.
+* offloading. It sends a total number 'n' of jobs to process, each 'p' seconds.
+  One of {cpu, mem, temp, maxlocal} must be specified as a threshold to know
+  when to offload.
+
+The script uses a number of env vars, which are read from `conf.sh`.
