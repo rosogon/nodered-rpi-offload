@@ -29,12 +29,16 @@ NJOBS=$(echo $JOBS | sed -e 's/.*-\(.*\)-total.*/\1/' )
 DELTA=$(jq -r '.[-1].times.batchdelta' < $JOBS)
 LOCALJOBS=$(jq -r '[.[].remote | select(. == 0)] | length' < $JOBS)
 PLOCALJOBS=$(echo "scale=2; 100*$LOCALJOBS/$NJOBS" | bc)
+LOCALPROCAVG=$(jq -r 'map(select(.remote == 0)) | [.[].times.procdelta] | add / length' < $JOBS)
+LOCALPROCMAX=$(jq -r 'map(select(.remote == 0)) | [.[].times.procdelta] | max' < $JOBS)
 
 cat <<EOF > summary.txt
 Time: $DELTA
 Total: $NJOBS
 Local: $LOCALJOBS
 Percentage: $PLOCALJOBS
+Localprocavg: $LOCALPROCAVG
+Localprocmax: $LOCALPROCMAX
 EOF
 
 #
