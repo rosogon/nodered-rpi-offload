@@ -50,4 +50,7 @@ gnuplot -e "title='Job duration'" -e "csv='$JOBS_CSV'" -e "njobs=$NJOBS" $DIR/pl
 
 gnuplot -e "title='Current jobs'" -e "csv='$MON_CSV'" -e "start=$START.0" -e "dir='$DIR'" $DIR/plot5.plg > graph5.png
 
-montage graph*.png -tile 2x2 -title "$TITLE" -geometry +0+0 total.png
+echo $TITLE
+gnuplot -e "title='$TITLE'" -e "csv='$JOBS_CSV'" -e "njobs=$NJOBS" $DIR/plot6.plg > graph6.png
+
+montage graph2.png graph4.png -tile 2x1 -title "$TITLE" -geometry +0+0 total.png
