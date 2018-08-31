@@ -29,12 +29,16 @@ NJOBS=$(echo $JOBS | sed -e 's/.*-\(.*\)-total.*/\1/' )
 DELTA=$(jq -r '.[-1].times.batchdelta' < $JOBS)
 LOCALJOBS=$(jq -r '[.[].remote | select(. == 0)] | length' < $JOBS)
 PLOCALJOBS=$(echo "scale=2; 100*$LOCALJOBS/$NJOBS" | bc)
+LOCALPROCAVG=$(jq -r 'map(select(.remote == 0)) | [.[].times.procdelta] | add / length' < $JOBS)
+LOCALPROCMAX=$(jq -r 'map(select(.remote == 0)) | [.[].times.procdelta] | max' < $JOBS)
 
 cat <<EOF > summary.txt
 Time: $DELTA
 Total: $NJOBS
 Local: $LOCALJOBS
 Percentage: $PLOCALJOBS
+Localprocavg: $LOCALPROCAVG
+Localprocmax: $LOCALPROCMAX
 EOF
 
 #
@@ -50,4 +54,7 @@ gnuplot -e "title='Job duration'" -e "csv='$JOBS_CSV'" -e "njobs=$NJOBS" $DIR/pl
 
 gnuplot -e "title='Current jobs'" -e "csv='$MON_CSV'" -e "start=$START.0" -e "dir='$DIR'" $DIR/plot5.plg > graph5.png
 
-montage graph*.png -tile 2x2 -title "$TITLE" -geometry +0+0 total.png
+echo $TITLE
+gnuplot -e "title='$TITLE'" -e "csv='$JOBS_CSV'" -e "njobs=$NJOBS" $DIR/plot6.plg > graph6.png
+
+montage graph2.png graph4.png -tile 2x1 -title "$TITLE" -geometry +0+0 total.png

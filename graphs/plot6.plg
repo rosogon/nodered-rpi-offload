@@ -1,7 +1,4 @@
-print "plot4 - ", "title:", title, " njobs:", njobs
-
-
-set term png
+set term png size 640,320
 set datafile separator ","
 set title title
 set key autotitle columnhead
@@ -9,7 +6,7 @@ set key autotitle columnhead
 set grid
 
 set xlabel 'job number'
-set ylabel 's'
+set ylabel 'job duration [s]'
 set xrange[1:njobs]
 #set yrange[0:]
 
