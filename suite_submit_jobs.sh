@@ -2,7 +2,7 @@
 # Configure conf.sh first:
 #
 # Prerequisites:
-# - docker-compose, gnuplot and jq (https://stedolan.github.io/jq/download/)
+# - docker-compose, gnuplot, jq (https://stedolan.github.io/jq/download/), bc, imagemagick
 # - performance-monitor
 #   performance-monitor must be configured ($PERF_DIR/src/conf) to
 #   reach the docker daemon and to watch the "nodered" container.
@@ -53,7 +53,9 @@ fi
 
 set -x
 
-cd "$DIR/$ARCH" && docker-compose up -d
+cd "$DIR/$ARCH"
+docker-compose down || echo "already down"
+docker-compose up -d
 
 docker-compose logs > /tmp/node-red.log 2>&1 &
 sleep 10
