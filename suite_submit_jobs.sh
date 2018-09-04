@@ -51,6 +51,11 @@ else
     DATA_DIR="$DATA_ROOT_DIR"/$PERIOD-$TOTAL-$KEY-$VALUE-$SUFFIX
 fi
 
+if [ -d "$DATA_DIR" ]; then
+  echo "folder already exists, skipping"
+  exit 0
+fi
+
 set -x
 
 cd "$DIR/$ARCH"
