@@ -31,7 +31,7 @@ RUN apt-get install -y lm-sensors || echo "lm-sensors not available"
 
 RUN apt-get install sysstat
 
-RUN npm install -g node-red
+RUN npm install -g node-red@0.18.4
 
 WORKDIR /opt/lib
 
