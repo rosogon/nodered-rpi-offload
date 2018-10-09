@@ -1,11 +1,11 @@
-set term png size 640,320
+set term png size 640,240
 set datafile separator ","
-set title title
+set title title offset 0,-16
 set key autotitle columnhead
 
 set grid
 
-set xlabel 'job number'
+set xlabel 'job ID'
 set ylabel 'job duration [s]'
 set xrange[1:njobs]
 #set yrange[0:]
